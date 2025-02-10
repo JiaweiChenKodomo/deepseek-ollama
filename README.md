@@ -72,7 +72,7 @@ ollama run deepseek-r1:1.5b
 2. Run the Streamlit application:
 
 ```bash
-streamlit run main.py
+streamlit run streamli.py
 ```
 
 3. Access the application in your web browser at `http://localhost:8501`
