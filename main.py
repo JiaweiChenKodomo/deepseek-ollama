@@ -1,17 +1,17 @@
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_ollama import OllamaEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_ollama.llms import OllamaLLM
 
-pdfs_directory = 'pdfs/'
+pdfs_directory = './'
 
 
-embeddings = OllamaEmbeddings(model="deepseek-r1:1.5b")
+embeddings = OllamaEmbeddings(model="deepseek-r1:32b")
 
-model = OllamaLLM(model="deepseek-r1:1.5b")
+model = OllamaLLM(model="deepseek-r1:32b")
 
 template = """
 You are an assistant that answers questions. Using the following retrieved information, answer the user question. If you don't know the answer, say that you don't know. Use up to three sentences, keeping the answer concise.
@@ -21,7 +21,7 @@ Answer:
 """
 
 def upload_pdf(file):
-    with open(pdfs_directory + file.name, "wb") as f:
+    with open(pdfs_directory + file.name, "wb+") as f:
         f.write(file.getbuffer())
 
 def create_vector_store(file_path):
@@ -50,3 +50,5 @@ def question_pdf(question, documents):
     chain = prompt | model
 
     return chain.invoke({"question": question, "context": context})
+
+
